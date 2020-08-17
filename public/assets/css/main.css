@@ -1,0 +1,78 @@
+body {
+  font-family: 'Cairo', sans-serif;
+}
+
+.navbar {
+  height: 10vh;
+}
+
+.navbar-brand {
+  font-size: 1.6rem;
+}
+
+.navbar-brand,
+.nav-item {
+  font-weight: bold;
+}
+
+.header {
+  background: url(../images/header.jpg) 0 0 no-repeat;
+  background-size: cover;
+  height: 90vh;
+  overflow: hidden;
+  position: relative;
+  direction: rtl;
+}
+
+.header .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  content: '';
+  opacity: .8;
+  background: #7C4DFF;
+  background: linear-gradient(45deg, #7C4DFF 0%, #FFA000 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f200ff', endColorstr='#ffba42', GradientType=1);
+}
+
+.header_content {
+  z-index: 3 !important;
+  position: relative;
+}
+
+.has-search .form-control {
+  padding-right: 2.4rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+}
+
+.btn-primary {
+  background: #ffa726 !important;
+  border: 1px solid #ffd369 !important;
+  color: #fff !important;
+  font-weight: bold;
+  border: none !important;
+  box-shadow: 0.2px 5px 40px #e65100;
+}
+
+.register-text {
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.register-text span a {
+  color: #ffa726
+}
