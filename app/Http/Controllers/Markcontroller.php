@@ -30,7 +30,7 @@ class Markcontroller extends Controller
                 $mark->LabHomeworkMark = $request->input('LabHomeworkMark');
                 $mark->LabExamMark = $request->input('LabExamMark');
                 $mark->FinalExamMark = $request->input('FinalExamMark');
-                $std = User::findOrFail($mark->StudentID)->first();
+                $std = User::findOrFail($mark->StudentID);
                 $options = array(
                     'cluster' => 'ap2',
                     'encrypted' => true
