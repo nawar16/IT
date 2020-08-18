@@ -115,3 +115,23 @@ Route::get('doctor/{id}/courses','web\DoctorrController@courses')->where('id','[
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+Route::get('/private_bridge', function() {
+    
+        error_reporting(E_ALL);
+    
+        $options = array(
+            'cluster' => 'ap2',
+            'encrypted' => true
+        );
+        $pusher = new \Pusher\Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+    
+        $data['message'] = 'new mark';
+        $pusher->trigger('std_12', 'newMark', $data);
+    
+        return view('welcome');
+    });
