@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Auth::routes();
+
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
@@ -115,18 +115,3 @@ Route::get('doctor/{id}/courses','web\DoctorrController@courses')->where('id','[
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Route::post( 'notify', 'NotificationController@notify' );
-Route::get('notify',function(){
-    App::bind('MyEvent', function(){
-        return new MyEvent('hello world');
-    });
-    
-    // get the binding
-    $pusher = App::make('MyEvent');
-    
-    /*$pusher->trigger( 'my-channel',
-                      'my-event', 
-                       array('text' => 'this is a notification'));*/
-    event(new MyEvent('hello world'));
-    return view('home');
-});
