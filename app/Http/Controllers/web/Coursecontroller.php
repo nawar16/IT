@@ -61,4 +61,25 @@ class Coursecontroller extends Controller
         $attendings = $course->attendings;
         return AttendingResource::collection($attendings);
     }
+
+    public function lecture(Request $request)
+    {
+        $validation = $request->validate([
+            'lec' => 'required|file|mimes:pdf,doc,docm,docx,dot'
+            // for multiple file uploads
+            // 'lec.*' => 'required|file|mimes:pdf,doc,docm,docx,dot|max:2048'
+            ]);
+        $file = $validation['lec']; // get the validated file*/
+        //$file  = $request->file('lec');
+        $year = $request->year;
+        $f = $request->f;
+
+        $extension = $file->getClientOriginalExtension(); 
+        // generate a new filename. getClientOriginalExtension() for the file extension
+        $filename = 'lec-' . time() . '.' . $file->getClientOriginalExtension();
+        // save to storage/app/year/f as the new $filename
+        $path = $file->storeAs($year/$f, $filename);
+        Storage::disk('local')->put($filename, $file);
+        dd($path);
+    }
 }

@@ -114,7 +114,8 @@ Route::get('doctor/student/{id}/attendings','web\DoctorrController@attendings')-
 Route::post('course','web\CourseController@store')->middleware('auth:doctors_web');
 //List doctor's courses
 Route::get('doctor/{id}/courses','web\DoctorrController@courses')->where('id','[0-9]+');
-
+//new lecture
+Route::post('lecture','web\CourseController@lecture');
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*Route::get('/private_bridge', function() {
@@ -181,7 +182,7 @@ Route::get('doctor/{id}/courses','web\DoctorrController@courses')->where('id','[
                 });
     
     // Your data that you would like to send to Pusher
-    $data = ['text' => 'hello world from Laravel 5.3'];
+    $data = ['text' => 'hello hello from me'];
     
     // Sending the data to channel: "test_channel" with "my_event" event
     $pusher->trigger( 'std_91', 'my-event', $data);
