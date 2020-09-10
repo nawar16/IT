@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
+    public $incrementing = false;
     protected $table = 'courses';
     protected $keyType = 'string';
     protected $primaryKey = 'Name';

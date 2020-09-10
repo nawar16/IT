@@ -16,18 +16,6 @@
     channel.bind('my-event', function(data) {
       alert(JSON.stringify(data));
     });
-
-    // Enable pusher logging - don't include this in production
-    /*Pusher.logToConsole = true;
-
-    var pusher = new Pusher('1f4fc2b4712daf42b883', {
-      cluster: 'ap2'
-    });
-
-    var channel = pusher.subscribe('public-channel');
-    channel.bind('public-mark', function(data) {
-      alert(JSON.stringify(data));
-    });*/
   </script>
 </head>
 <body>

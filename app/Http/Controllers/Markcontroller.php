@@ -8,6 +8,7 @@ use App\Mark;
 use App\User;
 use App\Course;
 use App\Events\newMark;
+use App\Events\MyEvent;
 use App\Http\Resources\mark as MarkResource;
 use App\Http\Resources\user as UserResource;
 use App\Http\Resources\course as CourseResource;
@@ -31,19 +32,26 @@ class Markcontroller extends Controller
                 $mark->LabExamMark = $request->input('LabExamMark');
                 $mark->FinalExamMark = $request->input('FinalExamMark');
                 $std = User::findOrFail($mark->StudentID);
-                $options = array(
-                    'cluster' => 'ap2',
-                    'encrypted' => true
-                );
-                $pusher = new \Pusher\Pusher(
-                    env('PUSHER_APP_KEY'),
-                    env('PUSHER_APP_SECRET'),
-                    env('PUSHER_APP_ID'),
-                    $options
-                );
-                $data['message'] = 'Hello '.$std->name.', you\'ve got new mark';
+                
+                // New Pusher instance with config data
+                $pusher = new \Pusher\Pusher(config('broadcasting.connections.pusher.key'),
+                config('broadcasting.connections.pusher.secret'), 
+                config('broadcasting.connections.pusher.app_id'),
+                config('broadcasting.connections.pusher.options'));
+   
+                // Enable pusher logging, used an anonymous class and the Monolog
+                $pusher->set_logger(new class {
+                    public function log($msg)
+                      {
+                          \Log::info($msg);
+                      }
+                });
+                //  data to send to Pusher
+                $data = ['text' => 'Hello '.$std->name.', you\'ve got new mark'];
+
+
                 if($mark->save()){
-                    $pusher->trigger('std_'.$mark->StudentID , 'newMark', $data);
+                    $pusher->trigger( 'std_'.$mark->StudentID, 'my-event', $data);
                     return new MarkResource($mark);
                 }
     }

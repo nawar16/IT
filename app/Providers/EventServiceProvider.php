@@ -18,6 +18,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        'App\Events\newMark' => [
+            'App\Listeners\newMarkListener',
+        ],
     ];
 
     /**
@@ -30,5 +33,14 @@ class EventServiceProvider extends ServiceProvider
         parent::boot();
 
         //
+    }
+    /**
+    * Determine if events and listeners should be automatically discovered.
+    *
+    * @return bool
+    */
+    public function shouldDiscoverEvents()
+    {
+        return true;
     }
 }

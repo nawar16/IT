@@ -27,4 +27,10 @@ class newMark implements ShouldBroadcast
     {
         return new PrivateChannel('std_'.$this->user->stdID());
     }
+
+    public function broadcastAs()
+    {
+        return 'my-mark';
+    }
+
 }

@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Events\MyEvent;
+use App\User;
+use App\Events\mark;
 
 /*
 |--------------------------------------------------------------------------
@@ -115,7 +117,7 @@ Route::get('doctor/{id}/courses','web\DoctorrController@courses')->where('id','[
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Route::get('/private_bridge', function() {
+/*Route::get('/private_bridge', function() {
     
         error_reporting(E_ALL);
     
@@ -130,8 +132,59 @@ Route::get('/private_bridge', function() {
             $options
         );
     
-        $data['message'] = 'new mark';
-        $pusher->trigger('std_12', 'newMark', $data);
-    
+        $data['message'] = 'Hi from web route';
+        //$pusher->trigger('std_'.Auth::user()->id, 'my-event', $data);
+        //event(new MyEvent(Auth::user(),'hello world from web route'));
+
+        $pusher->trigger('std_91', 'my-event', $data);
+        $user = User::findOrFail(91);
+        event(new MyEvent($user,'hello world from web route'));
         return view('welcome');
+    });
+
+    Route::get('/public_bridge', function() {
+        error_reporting(E_ALL);
+    
+        $options = array(
+            'cluster' => 'ap2',
+            'encrypted' => true
+        );
+        $pusher = new \Pusher\Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+        
+        $message = "test public broadcast";
+        $user = User::findOrFail(90);
+        $pusher->trigger('std_90', 'my-event', ['user' => $user, 'message' => $message]);
+        event(new MyEvent($user,$message));
+        return view('welcome');
+    });
+*/
+
+    Route::get('/broadcast', function() {
+        
+    // New Pusher instance with our config data
+    $pusher = new \Pusher\Pusher(config('broadcasting.connections.pusher.key'),
+     config('broadcasting.connections.pusher.secret'), 
+     config('broadcasting.connections.pusher.app_id'),
+      config('broadcasting.connections.pusher.options'));
+    
+    // Enable pusher logging - I used an anonymous class and the Monolog
+    $pusher->set_logger(new class {
+                    public function log($msg)
+                    {
+                        \Log::info($msg);
+                    }
+                });
+    
+    // Your data that you would like to send to Pusher
+    $data = ['text' => 'hello world from Laravel 5.3'];
+    
+    // Sending the data to channel: "test_channel" with "my_event" event
+    $pusher->trigger( 'std_91', 'my-event', $data);
+    
+    return 'ok'; 
     });
