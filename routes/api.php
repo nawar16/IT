@@ -133,3 +133,5 @@ Route::post('course','CourseController@store')->middleware('assign.guard:doctors
 Route::get('doctor/{id}/courses','DoctorController@courses')->where('id','[0-9]+')->middleware('assign.guard:doctors');
 //new lecture
 Route::post('lecture','CourseController@lecture');
+//download lecture
+Route::post('downloadlecture','CourseController@downloadlecture');

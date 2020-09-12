@@ -74,12 +74,20 @@ class Coursecontroller extends Controller
         $year = $request->year;
         $f = $request->f;
 
-        $extension = $file->getClientOriginalExtension(); 
-        // generate a new filename. getClientOriginalExtension() for the file extension
-        $filename = 'lec-' . time() . '.' . $file->getClientOriginalExtension();
-        // save to storage/app/year/f as the new $filename
-        $path = $file->storeAs($year/$f, $filename);
-        Storage::disk('local')->put($filename, $file);
-        dd($path);
+        $filename = $file->getClientOriginalName() ;
+        $path ='/Y'.$year.'/'.$f;
+        \Storage::disk('public')->putFileAs($path, $file, $filename);
+
+        return url('/').'/storage/app/public'.$path.'/'.$filename;
+    }
+    public function downloadlecture(Request $request)
+    {
+
+        $year = $request->year;
+        $f = $request->f;
+        $file = $request->file;
+        return response()->download(
+            storage_path("app/public/Y".$year."/".$f."/".$file.".pdf")
+        );
     }
 }

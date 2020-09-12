@@ -116,6 +116,8 @@ Route::post('course','web\CourseController@store')->middleware('auth:doctors_web
 Route::get('doctor/{id}/courses','web\DoctorrController@courses')->where('id','[0-9]+');
 //new lecture
 Route::post('lecture','web\CourseController@lecture');
+//download lecture
+Route::post('downloadlecture','web\CourseController@downloadlecture');
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*Route::get('/private_bridge', function() {
