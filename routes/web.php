@@ -25,10 +25,6 @@ Route::get('/', function () {
 //Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
-});
-
 
 Route::group(['namespace' => 'web'], function(){
     Route::get('register', [
@@ -44,7 +40,7 @@ Route::group(['namespace' => 'web'], function(){
         'as' => 'login',
         'uses' => 'UserrController@userLoginIndex'
       ]);
-        Route::post('login', [
+      Route::post('login', [
             'as' => '',
             'uses' => 'UserrController@Login'
       ]);

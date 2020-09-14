@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends \TCG\Voyager\Models\User implements JWTSubject
+class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
     protected $table = 'users';
@@ -18,7 +18,7 @@ class User extends \TCG\Voyager\Models\User implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'Year', 'OtherCourses', 'Class', 'IsAdmin'
+        'name', 'universityID', 'password', 'Year', 'OtherCourses', 'Class', 'IsAdmin'
     ];
 
     /**
@@ -36,7 +36,7 @@ class User extends \TCG\Voyager\Models\User implements JWTSubject
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'universityID_verified_at' => 'datetime',
     ];
     public function marks(){
         

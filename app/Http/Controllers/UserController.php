@@ -35,7 +35,7 @@ class UserController extends Controller
             $user = User::create([
             'id' => $request->id,
             'name' => $request->name,
-            'email' => $request->email,
+            'universityID' => $request->universityID,
             'password' => bcrypt($request->password),
             'Class' => $request->Class,
             'Year' => $request->Year,
@@ -45,19 +45,19 @@ class UserController extends Controller
     
           $token = auth('api')->login($user);
     
-          return $this->respondWithToken($token);
+          return $this->respondWithToken($token,$request->IsAdmin);
         }
     
 
         public function login(Request $request)
         {
-          $credentials = $request->only(['email', 'password']);
+          $credentials = $request->only(['universityID', 'password']);
     
           if (!$token = auth('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
           }
     
-          return $this->respondWithToken($token);
+          return $this->respondWithToken($token,$request->isAdmin);
         }
 
         public function getAuthUser(Request $request)
@@ -71,10 +71,17 @@ class UserController extends Controller
             return response()->json(['message'=>'Successfully logged out']);
         }
 
-        protected function respondWithToken($token)
+        protected function respondWithToken($token, $isAdmin=null)
         {
+          if(!$isAdmin)
+          {
+              $isAdmin = '0';
+          }else {
+              $isAdmin = '1';
+          }
           return response()->json([
             'access_token' => $token,
+            'isAdmin' => $isAdmin,
             'token_type' => 'bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60
           ]);
@@ -82,7 +89,7 @@ class UserController extends Controller
 
         public function getToken(Request $request)
         {
-            $credentials = ['email' => request('email'), 'password' => request('password')];
+            $credentials = ['universityID' => request('universityID'), 'password' => request('password')];
             
              if (! $token = auth('api')->attempt($credentials)) {
                  return response()->json(['error' => 'Unauthorized'], 401);

@@ -37,7 +37,7 @@ public $loginAfterSignUp = true;
         // validate form fields
         $request->validate([
                 'name' => 'required',
-                'email' => 'required|email',
+                'universityID' => 'required',
                 'password' => 'required|min:6',
             ]);
 
@@ -46,7 +46,7 @@ public $loginAfterSignUp = true;
         // if validation success then create an input array
         $inputArray= array(
             'name'  =>  $request->name,
-            'email'  =>  $request->email,
+            'universityID'  =>  $request->universityID,
             'password' => Hash::make($request->password),
         );
 
@@ -74,11 +74,11 @@ public $loginAfterSignUp = true;
     public function Login(Request $request) {
 
         $request->validate([
-            "email"           =>    "required|email",
+            "universityID"           =>    "required",
             "password"        =>    "required|min:6"
         ]);
 
-        $userCredentials = $request->only('email', 'password');
+        $userCredentials = $request->only('universityID', 'password');
 
         // check user using auth function
         if (Auth::attempt($userCredentials)) {
