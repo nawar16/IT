@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الأخبار</title>
+    <title>برنامج الدوام</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
-    <link rel="stylesheet" href="/assets/css/main.css">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="assets/css/main.css">
     <style>
         #admin-link-1 {
             display: none;
@@ -21,47 +19,10 @@
             display: none
         }
     </style>
-    <script>
-
-        function GetNewsResult(res) {
-            if ( res.data.data.length === 0 ) {
-                let div = document.getElementById('NewsList');
-                div.innerHTML = `
-                <br><br>
-                <h1 class='mt-5'>! لا يوجد أخبار في قاعدة البيانات</h1>
-                `
-            }
-            for ( var i = 0; i < res.data.length ; i++ ) {
-                let div = document.getElementById('NewsList');
-                div.innerHTML += `
-                <div class="main-content mt-5 ml-5" style="direction: rtl;">
-                    <div class="card text-right mt-5">
-                        <div class="card-body font-weight-bold">
-                            <i class="fas fa-newspaper ml-1"></i>
-                            <span style="color: black; text-decoration: none;">${ res.data[i].data.Title }</span>
-                            <hr>
-                            <p class="font-weight-normal">
-                                ${ res.data[i].data.Details }
-                            </p>
-                        </div>
-                        <div class="news-card-footer font-weight-bold">
-                            <i class="fas fa-calendar ml-1"></i> ${ res.data[i].data.PostDate }
-                        </div>
-                    </div>
-
-                </div>
-                `
-            }
-        }
-        axios
-            .get('http://127.0.0.1:8000/api/news')
-            .then((res) => GetNewsResult(res))
-            .catch((err) => console.error(err));
-
-    </script>
 
 </head>
 <body>
+
     <!-- Navbar -->
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -122,9 +83,22 @@
 
     <!-- End Navbar -->
 
-    <div class="row mt-5">
+    <div class="row">
+        <div class="col-9 mt-5">
 
-        <div class="col-9 text-right" id="NewsList"></div>
+            <div class="main-content mt-5 ml-5" style="direction: rtl;">
+
+                <iframe src="/assets/classes.pdf" width="100%" height="540"></iframe>
+
+            </div>
+
+            <div class="mt-5 mb-5 ml-5 text-right">
+                <a href="#" class="btn btn-danger btn-block">حذف البرنامج</a>
+            </div>
+
+        </div>
+
+        <!--  Side Bar -->
 
         <div class="col-3 mt-5">
 
@@ -174,9 +148,7 @@
 
         </div>
 
-    </div>
-
-<!--  End Side Bar -->
+    <!--  End Side Bar -->
 
     </div>
 
@@ -194,7 +166,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg==" crossorigin="anonymous"></script>
 
-    <script src="{{ URL::asset('js/main.js') }}"></script>
+    <script src="/assets/js/main.js"></script>
 
     <script>
         let IsAdmin = sessionStorage.getItem("IsAdmin");

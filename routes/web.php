@@ -91,6 +91,8 @@ Route::post('attending','UserrController@NewAttending');
 ////Admin
 //Create new post
 Route::post('post',['middleware' => ['auth:web', 'admin_web']],'web\NewsController@store')->middleware('admin_web');
+//Edit post
+Route::put('post',['middleware' => ['auth:web', 'admin_web']],'web\NewsController@store')->middleware('admin_web');
 //new dailyprogram
 Route::post('program',['middleware' => ['auth:web', 'admin_web']],'web\DailyProgramController@store')->middleware('admin_web');
 //delete a post
@@ -118,6 +120,8 @@ Route::post('download/lecture','web\CourseController@downloadlecture');
 Route::get('/about', function(){
     return view('about');
 });
+//list std's mark
+Route::get('marks/{universityID}','Markcontroller@show');
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*Route::get('/private_bridge', function() {

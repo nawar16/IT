@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الأخبار</title>
+    <title>العلامات الامتحانية</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -21,44 +21,6 @@
             display: none
         }
     </style>
-    <script>
-
-        function GetNewsResult(res) {
-            if ( res.data.data.length === 0 ) {
-                let div = document.getElementById('NewsList');
-                div.innerHTML = `
-                <br><br>
-                <h1 class='mt-5'>! لا يوجد أخبار في قاعدة البيانات</h1>
-                `
-            }
-            for ( var i = 0; i < res.data.length ; i++ ) {
-                let div = document.getElementById('NewsList');
-                div.innerHTML += `
-                <div class="main-content mt-5 ml-5" style="direction: rtl;">
-                    <div class="card text-right mt-5">
-                        <div class="card-body font-weight-bold">
-                            <i class="fas fa-newspaper ml-1"></i>
-                            <span style="color: black; text-decoration: none;">${ res.data[i].data.Title }</span>
-                            <hr>
-                            <p class="font-weight-normal">
-                                ${ res.data[i].data.Details }
-                            </p>
-                        </div>
-                        <div class="news-card-footer font-weight-bold">
-                            <i class="fas fa-calendar ml-1"></i> ${ res.data[i].data.PostDate }
-                        </div>
-                    </div>
-
-                </div>
-                `
-            }
-        }
-        axios
-            .get('http://127.0.0.1:8000/api/news')
-            .then((res) => GetNewsResult(res))
-            .catch((err) => console.error(err));
-
-    </script>
 
 </head>
 <body>
@@ -124,7 +86,27 @@
 
     <div class="row mt-5">
 
-        <div class="col-9 text-right" id="NewsList"></div>
+        <div class="col-9 mt-5" style="direction: rtl;">
+            <div class="col-2"></div>
+
+            <div class="col-10">
+
+                <h3 style="font-size: 1.2rem;" class="mt-5 mb-5 text-center font-weight-bold">أدخل رقمك الجامعي :</h3>
+                <form action="" method="GET">
+                    <div class="form-group has-search">
+                        <span class="fa fa-id-card form-control-feedback"></span>
+                        <input type="text" name="StudentID" id="StudentID" class="form-control"
+                            placeholder="الرقم الجامعي">
+                    </div>
+                    <input type="submit" value="البحث عن النتائج" class="btn btn-block mt-4" style="background-color: #17c0eb; color: #fff;">
+                </form>
+                <br><br><br>
+                <div id="grades-results" class="mt-5">
+                </div>
+
+            </div>
+
+        </div>
 
         <div class="col-3 mt-5">
 
@@ -197,11 +179,64 @@
     <script src="{{ URL::asset('js/main.js') }}"></script>
 
     <script>
+
         let IsAdmin = sessionStorage.getItem("IsAdmin");
         if ( IsAdmin == 1 ) {
             document.getElementById('admin-link-1').style.display = "block"
             document.getElementById('admin-link-2').style.display = "block"
         }
+
+        var grades_results = document.getElementById('grades-results');
+        var StudentID = document.getElementById('StudentID')
+
+        function createMarksTable(res) {
+
+            grades_results.innerHTML += `
+            <div class="row">
+            <div class="col-9 mt-5" style="font-size: 1.1rem;">
+                <div class="main-content mt-5 ml-5" style="direction: rtl; text-align: right;">
+                    <table class="table" style="border-radius: 10px; box-shadow: 1px 1px 15px #a3a3a3;">
+                        <thead class="thead-dark" style="background-color: #4b4b4b;">
+                        <tr>
+                            <th scope="col">السنة</th>
+                            <th scope="col">اسم المادة</th>
+                            <th scope="col">علامة العملي</th>
+                            <th scope="col">علامة النظري</th>
+                            <th scope="col">المجموع</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+            `
+
+            for ( let i = 0 ; i < res.data.length ; i++ ) {
+                grades_results.innerHTML += `
+
+                        <tr>
+                            <td>${res.data.CourseYear}</td>
+                            <td>${res.data.CourseName}</td>
+                            <td>${res.data.LabHomeworkMark}</td>
+                            <td>${res.data.LabExamMark}</td>
+                            <td>${res.data.FinalExamMark}</td>
+                            <td>${ res.data.LabExamMark + res.data.LabHomeworkMark + res.data.FinalExamMark }</td>
+                        </tr>
+                `
+            }
+
+            grades_results.innerHTML += `
+                    </tbody>
+                    </table>
+
+                    <br><br>
+            `
+        }
+
+        axios
+        .get("/api/marks", {
+            StudentID: StudentID,
+        })
+        .then( (res) => {
+            createMarksTable(res)
+        })
     </script>
 
 </body>

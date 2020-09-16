@@ -43,14 +43,14 @@
         <div class="container header_content">
             <div class="row d-flex justify-content-center">
                 <div class="col-md-5">
-                    <form method="POST" id="login-form" action= "/login">
+                    <form method="POST" id="login-form" action="{{ route('login') }}>
 
                         @csrf
 
                         <div class="form-group has-search">
                             <span class="fa fa-id-card form-control-feedback"></span>
-                            <input  name="email" id="email" class="form-control"
-                                placeholder="الإيميل">
+                            <input type="text" name="universityID" id="universityID" class="form-control"
+                                placeholder="الرقم الجامعي">
                         </div>
 
                         <div class="form-group has-search">
@@ -59,9 +59,9 @@
                                 placeholder="كلمة السر">
                         </div>
                         <div class="form-group">
-                            <select name="mode" id="mode" class="form-control" style="min-height: 45px">
-                                <option value="student">طالب</option>
-                                <option value="doctor">دكتور \ أستاذ</option>
+                            <select name="LoginMode" id="LoginMode" class="form-control" style="min-height: 45px">
+                                <option value="Student">طالب</option>
+                                <option value="Teacher">دكتور \ أستاذ</option>
                             </select>
                         </div>
 
@@ -87,6 +87,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg==" crossorigin="anonymous"></script>
     <script src="{{ URL::asset('js/main.js') }}"></script>
 </body>
-
 
 </html>

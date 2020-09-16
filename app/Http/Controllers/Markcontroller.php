@@ -56,6 +56,13 @@ class Markcontroller extends Controller
                 }
     }
 
+    public function show($universityID)
+    {
+        $std = User::where('universityID',$universityID)->first();
+        $marks = Mark::where('StudentID',$std->id)->paginate(15);
+        return MarkResource::collection($marks);
+    }
+
     public function destroy($id)
     {
         $stdM = Mark::where('StudentID',$id)->firstOrFail();
