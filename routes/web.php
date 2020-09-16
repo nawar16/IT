@@ -17,7 +17,7 @@ use App\Events\mark;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 
@@ -57,7 +57,7 @@ Route::group(['namespace' => 'web','prefix' => 'doctor'],function ()
     Route::post('user-store', 'DoctorrController@Register');
     Route::get('login', 'DoctorrController@userLoginIndex');
     Route::post('login', 'DoctorrController@Login');
-    Route::get('dashboard', 'DoctorrController@dashboard');
+    Route::get('{id}/dashboard', 'DoctorrController@dashboard')->name('doctor.dashboard');
     Route::get('logout', 'DoctorrController@logout');
 });
 
@@ -111,9 +111,13 @@ Route::post('course','web\CourseController@store')->middleware('auth:doctors_web
 //List doctor's courses
 Route::get('doctor/{id}/courses','web\DoctorrController@courses')->where('id','[0-9]+');
 //new lecture
-Route::post('lecture','web\CourseController@lecture');
+Route::post('upload/lecture','web\CourseController@lecture')->middleware('assign.guard:doctors');
 //download lecture
-Route::post('downloadlecture','web\CourseController@downloadlecture');
+Route::post('download/lecture','web\CourseController@downloadlecture');
+//about page
+Route::get('/about', function(){
+    return view('about');
+});
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*Route::get('/private_bridge', function() {

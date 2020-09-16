@@ -37,8 +37,11 @@ class UserController extends Controller
             'name' => $request->name,
             'universityID' => $request->universityID,
             'password' => bcrypt($request->password),
+            'Section' => $request->Section,
+            'Season' => $request->Season,
             'Class' => $request->Class,
             'Year' => $request->Year,
+            'SeasonCourses' => $request->SeasonCourses,
             'OtherCourses' => $request->OtherCourses,
             'IsAdmin' => $request->IsAdmin,
           ]);

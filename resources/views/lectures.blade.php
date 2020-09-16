@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الأخبار</title>
+    <title>المحاضرات</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -21,44 +21,6 @@
             display: none
         }
     </style>
-    <script>
-
-        function GetNewsResult(res) {
-            if ( res.data.data.length === 0 ) {
-                let div = document.getElementById('NewsList');
-                div.innerHTML = `
-                <br><br>
-                <h1 class='mt-5'>! لا يوجد أخبار في قاعدة البيانات</h1>
-                `
-            }
-            for ( var i = 0; i < res.data.length ; i++ ) {
-                let div = document.getElementById('NewsList');
-                div.innerHTML += `
-                <div class="main-content mt-5 ml-5" style="direction: rtl;">
-                    <div class="card text-right mt-5">
-                        <div class="card-body font-weight-bold">
-                            <i class="fas fa-newspaper ml-1"></i>
-                            <span style="color: black; text-decoration: none;">${ res.data[i].data.Title }</span>
-                            <hr>
-                            <p class="font-weight-normal">
-                                ${ res.data[i].data.Details }
-                            </p>
-                        </div>
-                        <div class="news-card-footer font-weight-bold">
-                            <i class="fas fa-calendar ml-1"></i> ${ res.data[i].data.PostDate }
-                        </div>
-                    </div>
-
-                </div>
-                `
-            }
-        }
-        axios
-            .get('http://127.0.0.1:8000/api/news')
-            .then((res) => GetNewsResult(res))
-            .catch((err) => console.error(err));
-
-    </script>
 
 </head>
 <body>
@@ -123,9 +85,42 @@
     <!-- End Navbar -->
 
     <div class="row mt-5">
-
-        <div class="col-9 text-right" id="NewsList"></div>
-
+        <div class="col-9 mt-5 text-right">
+            <div class="row">
+                <form action="" method="GET" id="lectures" class="lectures">
+                    <div class="form-row">
+                        <div class="col">
+                            <select name="year" id="year" class="form-control" style="width: 250px;" required>
+                                <option value="" selected disabled> السنة الدراسية... </option>
+                                <option value="1">السنة اﻷولى</option>
+                                <option value="2">السنة الثانية</option>
+                                <option value="3">السنة الثالثة</option>
+                                <option value="4">السنة الرابعة</option>
+                                <option value="5">السنة الخامسة</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select name="subjects" id="subjects"  class="form-control" style="width: 250px;" required>
+                                <option value="" selected disabled> اسم المادة... </option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select name="type" id="type" class="form-control" style="width: 250px;" required>
+                                <option value="" selected disabled> نوع المحاضرات... </option>
+                                <option value="theoretical">نظري</option>
+                                <option value="practical">عملي</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <input type="submit" value="البحث" class="btn btn-info pl-4 pr-4">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <hr>
+            <div class="row" id="lectures_wrapper">
+            </div>
+        </div>
         <div class="col-3 mt-5">
 
             <div class="wrapper">
@@ -176,10 +171,6 @@
 
     </div>
 
-<!--  End Side Bar -->
-
-    </div>
-
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
     </script>
@@ -197,11 +188,65 @@
     <script src="{{ URL::asset('js/main.js') }}"></script>
 
     <script>
+
         let IsAdmin = sessionStorage.getItem("IsAdmin");
         if ( IsAdmin == 1 ) {
             document.getElementById('admin-link-1').style.display = "block"
             document.getElementById('admin-link-2').style.display = "block"
         }
+
+        function GetCourses(res) {
+            if ( res.data.length == 0 ) {
+                let div = document.getElementById('lectures_wrapper');
+                div.innerHTML += `
+                <br><br>
+                <h1 class='mt-5'>! لا يوجد محاضرات في قاعدة البيانات</h1>
+                `
+            }
+            else {
+                for ( let i = 0; i < res.data.length ; i++ ) {
+                    let div = document.getElementById('lectures_wrapper');
+                    div.innerHTML += `
+
+                    <div class="col-3 mt-4">
+                        <div class="card">
+                            <div class="card-img-top">
+                                <img src="/assets/images/${res.data[i].CourseFileType}.png" alt="" width="100%" height="180px">
+                            </div>
+                            <div class="card-header text-right font-weight-bold">
+                                ${res.data[i].CourseNameAR}
+                            </div>
+                            <div class="card-footer">
+                                <a href="${res.data[i].CourseDownloadLink}" class="btn btn-block btn-info" download>
+                                    <i class="fas fa-download ml-1"></i>
+                                    تحميل
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    `
+                }
+            }
+        }
+
+        var form = document.getElementById('lectures');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault()
+            let year = document.getElementById('year').value;
+            let subject = document.getElementById('subjects').value;
+            let type = document.getElementById('type').value;
+
+            axios
+            .get("http://127.0.0.1:8000/api/student/courses", {
+                CourseNameAR: subject,
+                CourseType: type,
+            })
+            .then((res) => GetCourses(res))
+            .catch((err) => console.error(err));
+
+        })
+
     </script>
 
 </body>

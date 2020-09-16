@@ -20,7 +20,10 @@ class CreateUsersTable extends Migration
             $table->string('universityID')->unique();
             $table->timestamp('universityID_verified_at')->nullable();
             $table->string('password');
+            $table->string('Section')->nullable();
+            $table->integer('Season')->nullable();
             $table->double('Year')->nullable();
+            $table->text('SeasonCourses')->nullable();
             $table->text('OtherCourses')->nullable();
             $table->integer('Class')->nullable();
             $table->boolean('IsAdmin')->nullable();

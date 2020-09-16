@@ -132,6 +132,6 @@ Route::post('course','CourseController@store')->middleware('assign.guard:doctors
  */
 Route::get('doctor/{id}/courses','DoctorController@courses')->where('id','[0-9]+')->middleware('assign.guard:doctors');
 //new lecture
-Route::post('lecture','CourseController@lecture');
+Route::post('upload/lecture','CourseController@lecture')->middleware('assign.guard:doctors');
 //download lecture
-Route::post('downloadlecture','CourseController@downloadlecture');
+Route::post('download/lecture','CourseController@downloadlecture');

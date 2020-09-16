@@ -69,8 +69,7 @@ class Coursecontroller extends Controller
             // for multiple file uploads
             // 'lec.*' => 'required|file|mimes:pdf,doc,docm,docx,dot|max:2048'
         ]);
-        $file = $validation['lec']; // get the validated file*/
-        //$file  = $request->file('lec');
+        $file = $validation['lec'];
         $year = $request->year;
         $f = $request->f;
    

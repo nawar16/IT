@@ -67,7 +67,7 @@ public $loginAfterSignUp = true;
 
 // -------------------- [ User login view ] -----------------------
     public function userLoginIndex() {
-        return view('\auth\login');
+        return view('home');
     }
 
 // --------------------- [ User login ] ---------------------

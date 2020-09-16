@@ -1,9 +1,12 @@
 body {
   font-family: 'Cairo', sans-serif;
+  overflow-x: hidden;
 }
 
 .navbar {
   height: 10vh;
+  background-color: #3d3d3d;
+  z-index: 999;
 }
 
 .navbar-brand {
@@ -75,4 +78,112 @@ body {
 
 .register-text span a {
   color: #ffa726
+}
+
+.wrapper {
+  display: flex;
+  width: 100%;
+}
+
+#sidebar {
+  height: 100vh;
+  z-index: 20;
+  background: #7158e2;
+  color: #fff;
+  transition: all 0.3s;
+  position: fixed;
+  right: 0;
+  top: 0;
+  padding-top: 85px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 1.1rem;
+  box-shadow: 0 -2px 20px #a3a3a3;
+  text-align: right;
+  width: 260px;
+}
+
+.components li a {
+  color: #fff !important;
+  text-decoration: none !important;
+}
+
+.main-content .card {
+  border-radius: 10px;
+}
+
+.news-card-footer {
+  background-color: #7C4DFF;
+  border-radius: 0 0 10px 10px;
+  padding: 7px 15px;
+  color: #fff;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link{
+  background-color: #17A2B8;
+}
+.dropdown-menu{
+  top: 60px;
+  right: 0px;
+  left: unset;
+  width: 460px;
+  box-shadow: 0px 2px 5px -1px #a1a1a1;
+  padding-bottom: 0px;
+  padding: 0px;
+}
+.dropdown-menu:before{
+  content: "";
+  position: absolute;
+  top: -20px;
+  right: 12px;
+  border:10px solid #343A40;
+  border-color: transparent transparent #343A40 transparent;
+}
+.head{
+  padding:5px 15px;
+  border-radius: 3px 3px 0px 0px;
+}
+.footer{
+  padding:5px 15px;
+  border-radius: 0px 0px 3px 3px; 
+}
+.notification-box{
+  padding: 10px 0px; 
+}
+.bg-gray{
+  background-color: #eee;
+}
+
+.news-details-description {
+  font-size: 1.1rem;
+  width: 95%;
+  height: auto;
+  padding: 35px 20px 30px 0;
+  box-shadow: 0px 0px 10px #c3c3c3;
+  float: right;
+  border-radius: 10px;
+}
+
+.news-details-info-item {
+  width: auto;
+  padding: 15px 30px;
+  box-shadow: 0 0 10px #c3c3c3;
+  border-radius: 15px;
+}
+
+@media (max-width: 640px) {
+    .dropdown-menu{
+      top: 50px;
+      left: -16px;  
+      width: 290px;
+    } 
+    .nav{
+      display: block;
+    }
+    .nav .nav-item,.nav .nav-item a{
+      padding-left: 0px;
+    }
+    .message{
+      font-size: 13px;
+    }
 }
