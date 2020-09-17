@@ -121,7 +121,7 @@ Route::get('/about', function(){
     return view('about');
 });
 //list std's mark
-Route::get('marks/{universityID}','Markcontroller@show');
+Route::get('marks/{universityID}','web\Markcontroller@show')->name('std.grades');
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*Route::get('/private_bridge', function() {

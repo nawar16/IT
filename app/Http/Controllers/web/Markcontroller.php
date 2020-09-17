@@ -58,7 +58,7 @@ class Markcontroller extends Controller
     {
         $std = User::where('universityID',$universityID)->first();
         $marks = Mark::where('StudentID',$std->id)->paginate(15);
-        return MarkResource::collection($marks);
+        return view('std.grades', $marks);
     }
 
     public function destroy($id)
