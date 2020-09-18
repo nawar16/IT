@@ -15,12 +15,15 @@ class news extends JsonResource
     public function toArray($request)
     {
         return  [
-            'ID' => $this->ID,
-            'Title' => $this->Title,
-            'Details' => $this->Details,
-            'PostDate' =>$this->PostDate,
-            'TargetStudents' => $this->TargetStudents,
-            'TargetProffessors' => $this->TargetProffessors,
+            'Status' => 1,
+            'Result' => [
+                'ID' => $this->ID,
+                'Title' => $this->Title,
+                'Details' => $this->Details,
+                'PostDate' =>$this->PostDate,
+                'TargetStudents' => $this->TargetStudents,
+                'TargetProffessors' => $this->TargetProffessors,
+            ]
         ];
         //parent::toArray($request);
     }

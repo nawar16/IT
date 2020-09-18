@@ -11,6 +11,7 @@ use App\Http\Resources\attending as AttendingResource;
 use App\Http\Resources\doctor as DoctorResource;
 use App\Http\Resources\course as CourseResource;
 use App\Http\Resources\TokenResource as TokenResource;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Http\Controllers\Controller;
 use Auth;
@@ -33,17 +34,27 @@ class Doctorcontroller extends Controller
         public function register(Request $request)
         {
             //$doctor = $request->isMethod('put') ? Doctor::findOrFail($request->id) : new Doctor;
-
-            $doctor = Doctor::create([
-            'id' => $request->id,
-            'Name' => $request->name,
-            'password' => bcrypt($request->password),
-            'Certification' => $request->Certification,
-          ]);
-    
-          $token = auth('doctors')->login($doctor);
-    
-          return $this->respondWithToken($token);
+            $id = $request->id;
+            try
+            {
+                Doctor::findOrFail($id);
+                return response()->json([
+                    'Status' => 0,
+                    'Error' => 'An existing doctor have same ID'
+                ]);
+            }
+            catch(ModelNotFoundException $e){
+                $doctor = Doctor::create([
+                    'id' => $request->id,
+                    'Name' => $request->name,
+                    'password' => bcrypt($request->password),
+                    'Certification' => $request->Certification,
+                  ]);
+            
+                  $token = auth('doctors')->login($doctor);
+            
+                  return $this->respondWithToken($token);
+            }
         }
     
 
@@ -72,9 +83,13 @@ class Doctorcontroller extends Controller
         protected function respondWithToken($token)
         {
           return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth('doctors')->factory()->getTTL() * 60
+            'Status' => 1,
+            'Success' => 'Doctor has been added successfully!',
+            'Result' => [
+                'access_token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => auth('doctors')->factory()->getTTL() * 60
+            ]
           ]);
         }
 

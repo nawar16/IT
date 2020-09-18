@@ -11,7 +11,7 @@ class Course extends Model
     protected $keyType = 'string';
     protected $primaryKey = 'Name';
     protected $fillable = [
-        'Name' ,'DoctorID','TeacherID',  'CourseYear' , 'CourseSeason','HaveLabCourse' ,'CourseNameAR'
+        'Name' , 'CourseTeacher',  'CourseYear' , 'CourseSeason','HaveLabCourse' ,'CourseNameAR'
     ];
     public function marks(){
 

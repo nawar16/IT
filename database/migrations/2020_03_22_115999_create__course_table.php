@@ -22,7 +22,7 @@ class CreateCourseTable extends Migration
             $table->integer('TeacherID')->default(0);*/
             //->index();
             //$table->foreign('TeacherID')->references('ID')->on('Doctor')->onDelete('cascade');
-            $table->text('CourseTeacher');
+            $table->text('CourseTeacher')->nullable();
             $table->double('CourseYear');
             $table->integer('CourseSeason');
             $table->text('CourseNameAR');

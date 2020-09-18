@@ -15,12 +15,15 @@ class dailyprogram extends JsonResource
     public function toArray($request)
     {
         return  [
-            'CourseName' => $this->CourseName,
-            'ClassNumber' => $this->ClassNumber,
-            'Year' => $this->Year,
-            'Day' => $this->Day,
-            'Time' => $this->Time,
-            'Place' => $this->Place,
+            'Status' => 1,
+            'Result' => [
+                'CourseName' => $this->CourseName,
+                'ClassNumber' => $this->ClassNumber,
+                'Year' => $this->Year,
+                'Day' => $this->Day,
+                'Time' => $this->Time,
+                'Place' => $this->Place,
+            ]
         ];
         //return parent::toArray($request);
     }

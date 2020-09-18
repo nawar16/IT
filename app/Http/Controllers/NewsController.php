@@ -27,6 +27,12 @@ class NewsController extends Controller
                 if($post->save()){
                     return new NewsResource($post);
                 }
+                else{
+                    return response([
+                        'Status' => 0,
+                        'Error' => 'Error adding New Post! Please try again!'
+                    ]);
+                }
     }
 
     public function show($id)

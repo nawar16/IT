@@ -15,13 +15,18 @@ class user extends JsonResource
     public function toArray($request)
     {
         return  [
-            'name' => $this->name,
-            'email' => $this->email,
-            'password' => $this->password,
-            'OtherCourses' => $this->OtherCourses,
-            'Year' => $this->Year,
-            'Class' => $this->Class,
-            'IsAdmin' => $this->IsAdmin,
+            'Status' => 1,
+            'Result' => [
+                'name' => $this->name,
+                'universityID' => $this->universityID,
+                'password' => $this->password,
+                'OtherCourses' => $this->OtherCourses,
+                'Year' => $this->Year,
+                'Class' => $this->Class,
+                'IsAdmin' => $this->IsAdmin,
+                'SeasonCourses' => getStudentCourses($this->Year),
+                'OtherCourses' => getStudentOtherCourses($this->OtherCourses),
+            ]
         ];
         //return parent::toArray($request);
     }

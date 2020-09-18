@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Response;
 
 class Handler extends ExceptionHandler
 {
@@ -50,6 +51,24 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if($exception instanceof \Illuminate\Database\QueryException){
+            $errorCode = $exception->errorInfo[1];          
+            switch ($errorCode) {
+                case 1062://code dublicate entry 
+                    return response([
+                        'Status' => 0,
+                        'Error'=>'Duplicate Entry'
+                    ]);    
+                    break;
+                case 1364://handel any auther error
+                    return response([
+                        'Status' => 0,
+                        'Error'=>$exception->getMessage()
+                    ]);                        
+                    break;      
+            }
+         }
+        
         return parent::render($request, $exception);
     }
 }

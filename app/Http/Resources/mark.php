@@ -15,11 +15,14 @@ class mark extends JsonResource
     public function toArray($request)
     {
         return  [
-            'StudentID' => $this->StudentID,
-            'CourseName' => $this->CourseName,
-            'LabHomeworkMark' => $this->LabHomeworkMark,
-            'LabExamMark' =>$this->LabExamMark,
-            'FinalExamMark' => $this->FinalExamMark,
+            'Status' => 1,
+            'Result' => [
+                'StudentID' => $this->StudentID,
+                'CourseName' => $this->CourseName,
+                'LabHomeworkMark' => $this->LabHomeworkMark,
+                'LabExamMark' =>$this->LabExamMark,
+                'FinalExamMark' => $this->FinalExamMark,
+            ]
         ];
         //return parent::toArray($request);
     }

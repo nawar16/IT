@@ -10,6 +10,7 @@ use App\Http\Resources\user as UserResource;
 use App\Http\Resources\mark as MarkResource;
 use App\Http\Resources\attending as AttendingResource;
 use App\Http\Resources\TokenResource as TokenResource;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Auth;
 use Validator;
@@ -32,23 +33,37 @@ class UserController extends Controller
         {
           
             //$user = $request->isMethod('put') ? User::findOrFail($request->id) : new User;
-            $user = User::create([
-            'id' => $request->id,
-            'name' => $request->name,
-            'universityID' => $request->universityID,
-            'password' => bcrypt($request->password),
-            'Section' => $request->Section,
-            'Season' => $request->Season,
-            'Class' => $request->Class,
-            'Year' => $request->Year,
-            'SeasonCourses' => $request->SeasonCourses,
-            'OtherCourses' => $request->OtherCourses,
-            'IsAdmin' => $request->IsAdmin,
-          ]);
-    
-          $token = auth('api')->login($user);
-    
-          return $this->respondWithToken($token,$request->IsAdmin);
+            $id = $request->id;
+            try
+            {
+                User::findOrFail($id);
+                return response()->json([
+                    'Status' => 0,
+                    'Error' => 'An existing student have same ID'
+                ]);
+            }
+            // catch(Exception $e) catch any exception
+            catch(ModelNotFoundException $e)
+            {
+                $user = User::create([
+                    'id' => $request->id,
+                    'name' => $request->name,
+                    'universityID' => $request->universityID,
+                    'password' => bcrypt($request->password),
+                    'Section' => $request->Section,
+                    'Season' => $request->Season,
+                    'Class' => $request->Class,
+                    'Year' => $request->Year,
+                    'SeasonCourses' => $request->SeasonCourses,
+                    'OtherCourses' => $request->OtherCourses,
+                    'IsAdmin' => $request->IsAdmin,
+                  ]);
+            
+                  $token = auth('api')->login($user);
+            
+                  return $this->respondWithToken($token,$user);
+            }
+            
         }
     
 
@@ -74,19 +89,25 @@ class UserController extends Controller
             return response()->json(['message'=>'Successfully logged out']);
         }
 
-        protected function respondWithToken($token, $isAdmin=null)
+        protected function respondWithToken($token, $user)
         {
-          if(!$isAdmin)
-          {
-              $isAdmin = '0';
-          }else {
-              $isAdmin = '1';
-          }
+          
           return response()->json([
-            'access_token' => $token,
-            'isAdmin' => $isAdmin,
-            'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60
+            'Status' => 1,
+            'Success' => 'Student has been added successfully!',
+            'Result' => [
+                'name' => $user->name,
+                'universityID' => $user->universityID,
+                'password' => $user->password,
+                'Year' => $user->Year,
+                'Class' => $user->Class,
+                'IsAdmin' => $user->IsAdmin,
+                'SeasonCourses' => getStudentCourses($user->Year),
+                'OtherCourses' => getStudentOtherCourses($user->OtherCourses),
+                'access_token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => auth('api')->factory()->getTTL() * 60
+            ]
           ]);
         }
 

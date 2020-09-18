@@ -32,6 +32,12 @@ class DailyProgramcontroller extends Controller
                 if($prog->save()){
                     return new DailyProgramResource($prog);
                 }
+                else{
+                    return response([
+                        'Status' => 0,
+                        'Error' => 'Error adding New Program! Please try again!'
+                    ]);
+                }
     }
 
     public function destroy($year)

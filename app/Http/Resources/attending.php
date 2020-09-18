@@ -15,10 +15,13 @@ class attending extends JsonResource
     public function toArray($request)
     {
         return  [
-            'StudentID' => $this->StudentID,
-            'CourseName' => $this->CourseName,
-            'isLaboratory' => $this->isLaboratory,
-            'CourseDate' => $this->CourseDate,
+            'Status' => 1,
+            'Result' => [
+                'StudentID' => $this->StudentID,
+                'CourseName' => $this->CourseName,
+                'isLaboratory' => $this->isLaboratory,
+                'CourseDate' => $this->CourseDate,
+            ]
         ];
         //return parent::toArray($request);
     }

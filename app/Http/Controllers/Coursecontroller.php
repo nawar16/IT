@@ -31,6 +31,12 @@ class Coursecontroller extends Controller
                 if($course->save()){
                     return new CourseResource($course);
                 }
+                else{
+                    return response([
+                        'Status' => 0,
+                        'Error' => 'Error adding Lab Course! Please try again!'
+                    ]);
+                }
     }
 
     public function show($name)
