@@ -137,8 +137,10 @@ Route::post('course','CourseController@store')->middleware('assign.guard:doctors
  */
 Route::get('doctor/{id}/courses','DoctorController@courses')->where('id','[0-9]+')->middleware('assign.guard:doctors');
 //new lecture
-Route::post('upload/lecture','CourseController@lecture')->middleware('assign.guard:doctors');
+Route::post('upload/lecture','LectureController@lecture')->middleware('assign.guard:doctors');
 //download lecture
-Route::post('download/lecture','CourseController@downloadlecture');
+Route::post('download/lecture','LectureController@downloadlecture');
 //list std's mark
 Route::get('marks/{universityID}','Markcontroller@show');
+//list folder's file
+Route::get('lecture','LectureController@index');

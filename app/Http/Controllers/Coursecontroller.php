@@ -66,33 +66,4 @@ class Coursecontroller extends Controller
         return AttendingResource::collection($attendings);
     }
 
-    public function lecture(Request $request)
-    {
-        $validation = $request->validate([
-            'lec' => 'required|file|mimes:pdf,doc,docm,docx,dot'
-            // for multiple file uploads
-            // 'lec.*' => 'required|file|mimes:pdf,doc,docm,docx,dot|max:2048'
-        ]);
-        $file = $validation['lec'];
-        $year = $request->year;
-        $f = $request->f;
-   
-        $filename = $file->getClientOriginalName() ;
-        $path ='/Y'.$year.'/'.$f;
-        \Storage::disk('public')->putFileAs($path, $file, $filename);
-
-        return url('/').'/storage/app/public'.$path.'/'.$filename;
-        //http://127.0.0.1:8000/storage/Y4/theoretical/test.pdf
-        //return \Storage::url($filename, $file);
-    }
-    public function downloadlecture(Request $request)
-    {
-
-        $year = $request->year;
-        $f = $request->f;
-        $file = $request->file;
-        return response()->download(
-            storage_path("app/public/Y".$year."/".$f."/".$file.".pdf")
-        );
-    }
 }
