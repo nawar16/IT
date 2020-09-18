@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\web;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -14,7 +14,7 @@ class DailyProgramcontroller extends Controller
     public function index()
     {
         $prog = DailyProgram::paginate(1);
-        return view('home',$prog);
+        return DailyProgramResource::collection($prog);
     }
 
     public function store(Request $request)
@@ -30,7 +30,7 @@ class DailyProgramcontroller extends Controller
                 $prog->Place = $request->input('Place');
         
                 if($prog->save()){
-                    return redirect(route('admin.dashboard'), $prog);
+                    return new DailyProgramResource($prog);
                 }
     }
 
@@ -38,7 +38,7 @@ class DailyProgramcontroller extends Controller
     {
         $prog = DailyProgram::where('Year',$year)->firstOrFail();
         if($prog->delete()){
-            return view('admin.dashboard',$prog);
+            return new DailyProgramResource($prog);
         }
     }
 }

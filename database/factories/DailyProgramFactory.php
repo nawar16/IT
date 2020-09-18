@@ -8,6 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(App\DailyProgram::class, function (Faker $faker) {
     return [
         'CourseName' => App\Course::inRandomOrder()->first()->Name,
+        'DoctorID' => App\Doctor::inRandomOrder()->first()->id,
         'ClassNumber' => $faker->randomNumber(),
         'Year' =>strtoupper($faker->lexify('??')),
         'Day' => $faker->text(20),

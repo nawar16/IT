@@ -17,11 +17,12 @@ class CreateCourseTable extends Migration
             //$table->id();
             $table->engine='InnoDB';
             $table->string('Name')->primary()->unique();
-            $table->unsignedBigInteger('DoctorID')->unsigned()->index()->nullable();
+            /*$table->unsignedBigInteger('DoctorID')->unsigned()->index()->nullable();
             $table->foreign('DoctorID')->references('id')->on('doctors')->onDelete('set null');
-            $table->integer('TeacherID')->default(0);
+            $table->integer('TeacherID')->default(0);*/
             //->index();
             //$table->foreign('TeacherID')->references('ID')->on('Doctor')->onDelete('cascade');
+            $table->text('CourseTeacher');
             $table->double('CourseYear');
             $table->integer('CourseSeason');
             $table->text('CourseNameAR');

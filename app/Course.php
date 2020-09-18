@@ -23,11 +23,11 @@ class Course extends Model
         return $this->hasMany('App\Attending','CourseName');
         
     }
-    public function doctor(){
+    /*public function doctor(){
 
         return $this->belongsTo('App\Doctor','id');
 
-    }
+    }*/
     public function program(){
         
         return $this->belongsTo('App\DailyProgram');

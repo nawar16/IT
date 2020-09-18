@@ -18,6 +18,8 @@ class CreateDailyProgramTable extends Migration
             //$table->string('Name')->primary()->unique();
             $table->string('CourseName')->index()->nullable();
             $table->foreign('CourseName')->references('Name')->on('courses')->onDelete('set null');
+            $table->unsignedBigInteger('DoctorID')->unsigned()->index()->nullable();
+            $table->foreign('DoctorID')->references('id')->on('doctors')->onDelete('set null');
             $table->integer('ClassNumber');
             $table->string('Year',3);
             $table->text('Day');

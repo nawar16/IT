@@ -18,8 +18,6 @@ class CreateNewsTable extends Migration
             $table->text('Title');
             $table->text('Details');
             $table->date('PostDate');
-            $table->text('TargetStudents');
-            $table->text('TargetProffessors');
             $table->timestamps();
         });
     }

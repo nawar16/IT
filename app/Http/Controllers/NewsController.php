@@ -23,8 +23,6 @@ class NewsController extends Controller
                 $post->Title = $request->input('Title');
                 $post->Details = $request->input('Details');
                 $post->PostDate = $request->input('PostDate');
-                $post->TargetStudents = $request->input('TargetStudents');
-                $post->TargetProffessors = $request->input('TargetProffessors');
         
                 if($post->save()){
                     return new NewsResource($post);

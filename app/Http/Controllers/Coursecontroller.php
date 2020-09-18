@@ -17,14 +17,12 @@ class Coursecontroller extends Controller
         $courses = Course::paginate(15);
         return CourseResource::collection($courses);
     }
-
     public function store(Request $request)
     {
         $course = $request->isMethod('put') ? Course::findOrFail($request->Name) : new Course;
         
                 $course->Name = $request->input('Name');
-                $course->DoctorID = $request->input('DoctorID');
-                $course->TeacherID = $request->input('TeacherID');
+                $course->CourseTeacher = $request->input('CourseTeacher');
                 $course->CourseYear = $request->input('CourseYear');
                 $course->CourseSeason = $request->input('CourseSeason');
                 $course->CourseNameAR = $request->input('CourseNameAR');
