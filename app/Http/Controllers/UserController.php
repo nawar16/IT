@@ -91,22 +91,22 @@ class UserController extends Controller
 
         protected function respondWithToken($token, $user)
         {
-          
+          $season = date('m') >= env('first_season_end_month', null) && date('m') <= env('first_season_start_month', null) ? 2 : 1;            
           return response()->json([
             'Status' => 1,
-            'Success' => 'Student has been added successfully!',
             'Result' => [
-                'name' => $user->name,
-                'universityID' => $user->universityID,
-                'password' => $user->password,
+                'ID' => $user->universityID,
+                'Name' => $user->name,
+                'Season' => $season,
+                'Section' => $user->Section,
                 'Year' => $user->Year,
                 'Class' => $user->Class,
                 'IsAdmin' => $user->IsAdmin,
                 'SeasonCourses' => getStudentCourses($user->Year),
                 'OtherCourses' => getStudentOtherCourses($user->OtherCourses),
-                'access_token' => $token,
-                'token_type' => 'bearer',
-                'expires_in' => auth('api')->factory()->getTTL() * 60
+                'auth_token' => $token,
+                //'token_type' => 'bearer',
+                //'expires_in' => auth('api')->factory()->getTTL() * 60
             ]
           ]);
         }

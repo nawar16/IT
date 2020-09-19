@@ -17,13 +17,14 @@ class user extends JsonResource
         return  [
             'Status' => 1,
             'Result' => [
-                'name' => $this->name,
-                'universityID' => $this->universityID,
+                'Name' => $this->name,
+                'ID' => $this->universityID,
                 'password' => $this->password,
                 'OtherCourses' => $this->OtherCourses,
                 'Year' => $this->Year,
                 'Class' => $this->Class,
                 'IsAdmin' => $this->IsAdmin,
+                "Section" => $this->section,
                 'SeasonCourses' => getStudentCourses($this->Year),
                 'OtherCourses' => getStudentOtherCourses($this->OtherCourses),
             ]

@@ -18,13 +18,12 @@ class course extends JsonResource
         return  [
             'Status' => 1,
             'Result' => [
-                'Name' => $this->Name,
-                'DoctorID' => $this->DoctorID,
-                'TeacherID' => $this->TeacherID,
+                'CourseTag' => $this->Name,
+                'CourseTeachers' => $this->CourseTeachers,
                 'CourseYear' => $this->CourseYear,
                 'CourseSeason' => $this->CourseSeason,
-                'CourseNameAR' => $this->CourseNameAR,
-                'HaveLabCourse' => $this->HaveLabCourse,
+                'CourseName' => $this->CourseNameAR,
+                'IsHaveLabCourse' => $this->HaveLabCourse,
             ]
         ];
         //return parent::toArray($request);
