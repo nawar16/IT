@@ -19,7 +19,7 @@ class course extends JsonResource
             'Status' => 1,
             'Result' => [
                 'CourseTag' => $this->Name,
-                'CourseTeachers' => $this->CourseTeachers,
+                'CourseTeachers' => $this->CourseTeacher,
                 'CourseYear' => $this->CourseYear,
                 'CourseSeason' => $this->CourseSeason,
                 'CourseName' => $this->CourseNameAR,

@@ -104,16 +104,16 @@ Route::post('attending','UserController@NewAttending')->middleware('assign.guard
 /**
  * @description Create new post
  */
-Route::post('post',['middleware' => ['auth:api', 'admin_api']],'NewsController@store')->middleware('assign.guard:api','admin_api');
+Route::post('post','NewsController@store')->middleware('assign.guard:api','admin_api');
 /**
  * @description Edit post
  */
-Route::put('post',['middleware' => ['auth:web', 'admin_web']],'web\NewsController@store')->middleware('admin_web');
+Route::put('post','web\NewsController@store')->middleware('admin_web');
 
 /**
  * @description new dailyprogram
  */
-Route::post('program',['middleware' => ['auth:api', 'admin_api']],'DailyProgramController@store')->middleware('assign.guard:api','admin_api');
+Route::post('program','DailyProgramController@store')->middleware('assign.guard:api','admin_api');
 
 /////Doctor
 /**
@@ -132,10 +132,6 @@ Route::get('doctor/student/{id}/attendings','DoctorController@attendings')->wher
  * @description Create new course
  */
 Route::post('course','CourseController@store')->middleware('assign.guard:doctors');
-/**
- * @description List doctor's courses
- */
-Route::get('doctor/{id}/courses','DoctorController@courses')->where('id','[0-9]+')->middleware('assign.guard:doctors');
 //new lecture
 Route::post('upload/lecture','LectureController@lecture')->middleware('assign.guard:doctors');
 //download lecture
@@ -144,3 +140,5 @@ Route::post('download/lecture','LectureController@downloadlecture');
 Route::get('marks/{universityID}','Markcontroller@show');
 //list folder's file
 Route::get('lecture','LectureController@index');
+//list std's mark
+Route::get('marks/{universityID}','Markcontroller@show')->middleware('assign.guard:api');

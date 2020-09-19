@@ -21,7 +21,7 @@ class Admin_api
         {
             return $next($request);
         }
-        return response()->json(['error' => 'Unauthorized'], 401);
+        return response()->json(['Status'=> 0,'Error' => 'Unauthorized'], 401);
         //return redirect()->guest('login');
         //redirect('home');
         //return $next($request);

@@ -3,8 +3,10 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Auth\AuthenticationException as AuthenticationException;
 use Throwable;
 use Response;
+use ReflectionException;
 
 class Handler extends ExceptionHandler
 {
@@ -68,7 +70,22 @@ class Handler extends ExceptionHandler
                     break;      
             }
          }
+        if ($exception instanceof ReflectionException) {
+            return response([
+                'Status' => 0,
+                'Error'=>'Controller function that does not exist'
+            ]); 
+        }
         
         return parent::render($request, $exception);
+    }
+
+    protected function unauthenticated($request, AuthenticationException $exception) 
+    {
+        if ($request->expectsJson()) {
+            return response()->json(['Status'=> 0, 'Error' => 'Unauthenticated'], 401);
+        }
+    
+        return redirect()->guest('login');
     }
 }

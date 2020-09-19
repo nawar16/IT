@@ -69,13 +69,19 @@ class UserController extends Controller
 
         public function login(Request $request)
         {
-          $credentials = $request->only(['universityID', 'password']);
-    
-          if (!$token = auth('api')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+          try{
+            $credentials = $request->only(['universityID', 'password']);
+            
+                  if (!$token = auth('api')->attempt($credentials)) {
+                    return response()->json(['Status' => 0,'Error' => 'Unauthorized'], 401);
+                  }
+                  $user = User::where('universityID',$request->universityID)->firstOrFail();
+                  return $this->respondWithToken($token,$user);
           }
-    
-          return $this->respondWithToken($token,$request->isAdmin);
+          catch(\ErrorException $e)
+          {
+            return response()->json(['Status'=>0, 'Error'=>'Student ID not found']);
+          }
         }
 
         public function getAuthUser(Request $request)
@@ -86,7 +92,7 @@ class UserController extends Controller
         public function logout()
         {
             auth('api')->logout();
-            return response()->json(['message'=>'Successfully logged out']);
+            return response()->json(['Status'=>1,'Result'=>'Successfully logged out']);
         }
 
         protected function respondWithToken($token, $user)
@@ -95,7 +101,8 @@ class UserController extends Controller
           return response()->json([
             'Status' => 1,
             'Result' => [
-                'ID' => $user->universityID,
+                'ID' => $user->stdID(),
+                'universityID' => $user->universityID,
                 'Name' => $user->name,
                 'Season' => $season,
                 'Section' => $user->Section,
@@ -116,7 +123,7 @@ class UserController extends Controller
             $credentials = ['universityID' => request('universityID'), 'password' => request('password')];
             
              if (! $token = auth('api')->attempt($credentials)) {
-                 return response()->json(['error' => 'Unauthorized'], 401);
+                 return response()->json(['Status' => 0,'Error' => 'Unauthorized'], 401);
             }
             return new TokenResource(['token' => $token]);
         }
@@ -169,7 +176,7 @@ class UserController extends Controller
               $id = $request->StudentID;
               $tid=auth('api')->user()->stdID();
               //print_r($t);
-              if( $id != $tid) return response()->json(['error' => 'Unauthorized STD'], 401);
+              if( $id != $tid) return response()->json(['Status' => 0, 'Error' => 'Unauthorized student'], 401);
                 $attend->StudentID = $request->input('StudentID');
                 $attend->CourseName = $request->input('CourseName');
                 $attend->isLaboratory = $request->input('isLaboratory');

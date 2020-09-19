@@ -20,14 +20,14 @@ class AssignGuard
         if($guard != null){
             if ($guard == "api" && !Auth::guard($guard)->check()) {
                 return Response::json(array(
-                    'code'      =>  401,
-                    'message'   =>  'only user'
+                    'Status'  =>  0,
+                    'Error'   =>  'only user'
                 ), 401);
             }
             if ($guard == "doctors" && !Auth::guard($guard)->check()) {
                 return Response::json(array(
-                    'code'      =>  401,
-                    'message'   =>  'only doctors'
+                    'Status'  =>  0,
+                    'Error'   =>  'only doctors'
                 ), 401);
             }
         }

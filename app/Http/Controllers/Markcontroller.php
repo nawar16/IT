@@ -58,6 +58,11 @@ class Markcontroller extends Controller
 
     public function show($universityID)
     {
+        $u = User::where('universityID',$universityID)->firstOrFail();
+        $id = $u->id;
+        $tid=auth('api')->user()->stdID();
+        if( $id != $tid) return response()->json(['Status' => 0, 'Error' => 'Unauthorized student'], 401);
+        
         $std = User::where('universityID',$universityID)->first();
         $marks = Mark::where('StudentID',$std->id)->paginate(15);
         return MarkResource::collection($marks);

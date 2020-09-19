@@ -20,6 +20,7 @@ class NewsController extends Controller
     {
         $post = $request->isMethod('put') ? News::findOrFail($request->ID) : new News;
         
+                $post->ID = $request->ID;
                 $post->Title = $request->input('Title');
                 $post->Details = $request->input('Details');
                 $post->PostDate = $request->input('PostDate');

@@ -110,8 +110,6 @@ Route::post('doctor/attending','web\DoctorrController@NewAttending');
 Route::get('doctor/student/{id}/attendings','web\DoctorrController@attendings')->where('id','[0-9]+');
 //Create new course
 Route::post('course','web\CourseController@store')->middleware('auth:doctors_web');
-//List doctor's courses
-Route::get('doctor/{id}/courses','web\DoctorrController@courses')->where('id','[0-9]+');
 //new lecture
 Route::post('upload/lecture','web\CourseController@lecture')->middleware('assign.guard:doctors');
 //download lecture

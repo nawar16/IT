@@ -60,13 +60,19 @@ class Doctorcontroller extends Controller
 
         public function login(Request $request)
         {
-          $credentials = $request->only(['name', 'password']);
-    
-          if (!$token = auth('doctors')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+          try{
+            $credentials = $request->only(['name', 'password']);
+            
+                  if (!$token = auth('doctors')->attempt($credentials)) {
+                    return response()->json(['Status' => 0,'Error' => 'Unauthorized'], 401);
+                  }
+            
+                  return $this->respondWithToken($token);
           }
-    
-          return $this->respondWithToken($token);
+          catch(\ErrorException $e)
+          {
+            return response()->json(['Status'=>0, 'Error'=>'Doctor not found']);
+          }
         }
 
         public function getAuthUser(Request $request)
@@ -77,7 +83,7 @@ class Doctorcontroller extends Controller
         public function logout()
         {
             auth('doctors')->logout();
-            return response()->json(['message'=>'Successfully logged out']);
+            return response()->json(['Status'=>1,'Result'=>'Successfully logged out']);
         }
 
         protected function respondWithToken($token)
@@ -97,7 +103,7 @@ class Doctorcontroller extends Controller
             $credentials = ['name' => request('name'), 'password' => request('password')];
             
              if (! $token = auth('doctors')->attempt($credentials)) {
-                 return response()->json(['error' => 'Unauthorized'], 401);
+                 return response()->json(['Status' => 0,'Error' => 'Unauthorized'], 401);
             }
             return new TokenResource(['token' => $token]);
         }
