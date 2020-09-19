@@ -70,12 +70,13 @@ class UserController extends Controller
         public function login(Request $request)
         {
           try{
-            $credentials = $request->only(['universityID', 'password']);
-            
+            $password = $request->Password;
+            $universityID = $request->ID;
+            $credentials = ['universityID' => $universityID, 'password' => $password];
                   if (!$token = auth('api')->attempt($credentials)) {
                     return response()->json(['Status' => 0,'Error' => 'Unauthorized'], 401);
                   }
-                  $user = User::where('universityID',$request->universityID)->firstOrFail();
+                  $user = User::where('universityID',$universityID)->firstOrFail();
                   return $this->respondWithToken($token,$user);
           }
           catch(\ErrorException $e)
@@ -175,7 +176,6 @@ class UserController extends Controller
         
               $id = $request->StudentID;
               $tid=auth('api')->user()->stdID();
-              //print_r($t);
               if( $id != $tid) return response()->json(['Status' => 0, 'Error' => 'Unauthorized student'], 401);
                 $attend->StudentID = $request->input('StudentID');
                 $attend->CourseName = $request->input('CourseName');
