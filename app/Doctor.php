@@ -15,7 +15,7 @@ class Doctor extends Authenticatable implements JWTSubject
     protected $table = 'doctors';
     protected $primaryKey = 'id';
     protected $fillable = [
-         'name', 'Certification', 'password',
+         'Name', 'Certification', 'password',
     ];
     protected $hidden = [
         'password', 'remember_token',

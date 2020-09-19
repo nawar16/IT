@@ -84,11 +84,10 @@ class Doctorcontroller extends Controller
         {
           return response()->json([
             'Status' => 1,
-            'Success' => 'Doctor has been added successfully!',
             'Result' => [
-                'access_token' => $token,
-                'token_type' => 'bearer',
-                'expires_in' => auth('doctors')->factory()->getTTL() * 60
+                'auth_token' => $token,
+                //'token_type' => 'bearer',
+                //'expires_in' => auth('doctors')->factory()->getTTL() * 60
             ]
           ]);
         }
