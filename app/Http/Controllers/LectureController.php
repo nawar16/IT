@@ -16,8 +16,6 @@ class LectureController extends Controller
             $dirs = scandir($path);
             foreach($dirs as $dir)//Y1 Y2 Y3 Y4
             {
-                /*if($dir == '.') $dir = 'root';
-                if($dir == '..') $dir = 'public';*/
                 if($dir == '.' || $dir == '..') continue;
                 array_push($res0, $dir);
             }

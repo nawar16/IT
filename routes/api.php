@@ -3,20 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
-/*Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});*/
 /**
  * @description Register a student
  */
@@ -142,3 +128,14 @@ Route::get('marks/{universityID}','Markcontroller@show');
 Route::get('lecture','LectureController@index');
 //list std's mark
 Route::get('marks/{universityID}','Markcontroller@show')->middleware('assign.guard:api');
+
+Route::post('upload_drive/lecture', function (Request $request) {
+
+    $validation = $request->validate([
+        'lec' => 'required|file|mimes:pdf,doc,docm,docx,dot'
+    ]);
+    $file  = $validation['lec'];
+    $extension = $file->getClientOriginalExtension();    
+    $filename = 'lec-' . time() . '.' . $file->getClientOriginalExtension();
+    Storage::disk('google')->put($filename,$request->file('lec'));
+});

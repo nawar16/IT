@@ -17,7 +17,9 @@
         "laravel/tinker": "^2.0",
         "predis/predis": "^1.1",
         "pusher/pusher-php-server": "^4.1",
-        "tymon/jwt-auth": "dev-develop"
+        "tymon/jwt-auth": "dev-develop",
+        "google/apiclient": "^2.4",
+        "nao-pon/flysystem-google-drive": "~1.1"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

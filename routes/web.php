@@ -5,26 +5,9 @@ use App\Events\MyEvent;
 use App\User;
 use App\Events\mark;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
     return view('home');
 });
-
-
-
-//Route::get('/home', 'HomeController@index')->name('home');
-
-
 
 Route::group(['namespace' => 'web'], function(){
     Route::get('register', [
@@ -118,57 +101,12 @@ Route::post('download/lecture','web\CourseController@downloadlecture');
 Route::get('/about', function(){
     return view('about');
 });
+Route::get('/student/dashboard1', function(){
+    return view('std.dashboard');
+});
 //list std's mark
 Route::get('marks/{universityID}','web\Markcontroller@show')->name('std.grades');
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*Route::get('/private_bridge', function() {
-    
-        error_reporting(E_ALL);
-    
-        $options = array(
-            'cluster' => 'ap2',
-            'encrypted' => true
-        );
-        $pusher = new \Pusher\Pusher(
-            env('PUSHER_APP_KEY'),
-            env('PUSHER_APP_SECRET'),
-            env('PUSHER_APP_ID'),
-            $options
-        );
-    
-        $data['message'] = 'Hi from web route';
-        //$pusher->trigger('std_'.Auth::user()->id, 'my-event', $data);
-        //event(new MyEvent(Auth::user(),'hello world from web route'));
-
-        $pusher->trigger('std_91', 'my-event', $data);
-        $user = User::findOrFail(91);
-        event(new MyEvent($user,'hello world from web route'));
-        return view('welcome');
-    });
-
-    Route::get('/public_bridge', function() {
-        error_reporting(E_ALL);
-    
-        $options = array(
-            'cluster' => 'ap2',
-            'encrypted' => true
-        );
-        $pusher = new \Pusher\Pusher(
-            env('PUSHER_APP_KEY'),
-            env('PUSHER_APP_SECRET'),
-            env('PUSHER_APP_ID'),
-            $options
-        );
-        
-        $message = "test public broadcast";
-        $user = User::findOrFail(90);
-        $pusher->trigger('std_90', 'my-event', ['user' => $user, 'message' => $message]);
-        event(new MyEvent($user,$message));
-        return view('welcome');
-    });
-*/
-
     Route::get('/broadcast', function() {
         
     // New Pusher instance with our config data
@@ -189,7 +127,7 @@ Route::get('marks/{universityID}','web\Markcontroller@show')->name('std.grades')
     $data = ['text' => 'hello hello from me'];
     
     // Sending the data to channel: "test_channel" with "my_event" event
-    $pusher->trigger( 'std_91', 'my-event', $data);
+    $pusher->trigger( 'std_'.app()->user()->stdID(), 'my-event', $data);
     
     return 'ok'; 
     });

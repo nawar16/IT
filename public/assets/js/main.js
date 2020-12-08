@@ -248,20 +248,20 @@ let loginForm = document.getElementById("login-form");
 
 loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    let email = document.getElementById("email").value;
+    let universityID = document.getElementById("universityID").value;
     let password = document.getElementById("password").value;
     let mode = document.getElementById("mode").value;
 
     if (mode === "student") {
         axios
             .post("/api/user/login", {
-                email: email,
+                studentID: universityID,
                 password: password,
             })
             .then(function (res) {
                 sessionStorage.setItem("access_token", res.data.access_token);
                 sessionStorage.setItem("isAdmin", res.data.isAdmin);
-                window.location.href = "http://127.0.0.1:8000/student/${res.data.id}";
+                window.location.href = "http://127.0.0.1:8000/student/dashboard1";
             });
     } else {
         axios

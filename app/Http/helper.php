@@ -44,12 +44,12 @@ if (!function_exists('getStudentCourses')) {
                 if(!endsWith($c->Name, "#LAB"))
                 {
                     array_push($courses,[
-                        "CourseNameAR" => $c->CourseNameAR ,
-                        "Name" => $c->Name,
-                        "CourseTeacher" => $c->CourseTeacher,
+                        "CourseName" => $c->CourseNameAR ,
+                        "CourseTag" => $c->Name,
+                        "CourseTeachers" => $c->CourseTeacher,
                         "CourseYear" => $c->CourseYear,
                         "CourseSeason" => $c->CourseSeason,
-                        "HaveLabCourse" => $c->HaveLabCourse
+                        "IsHaveLabCourse" => $c->HaveLabCourse
                     ]
                    );
                 }
@@ -78,12 +78,12 @@ if (!function_exists('getStudentOtherCourses')) {
                         if(!endsWith($c->Name, "#LAB"))
                         {
                            array_push($courses,[
-                               "CourseNameAR" => $c->CourseNameAR ,
-                               "Name" => $c->Name,
-                               "CourseTeacher" => $c->CourseTeacher,
-                               "CourseYear" => $c->CourseYear,
-                               "CourseSeason" => $c->CourseSeason,
-                               "HaveLabCourse" => $c->HaveLabCourse
+                            "CourseName" => $c->CourseNameAR ,
+                            "CourseTag" => $c->Name,
+                            "CourseTeachers" => $c->CourseTeacher,
+                            "CourseYear" => $c->CourseYear,
+                            "CourseSeason" => $c->CourseSeason,
+                            "IsLab" => $c->HaveLabCourse
                              ]
                            );
                         }

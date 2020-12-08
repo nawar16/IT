@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Auth\AuthenticationException as AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException as ModelNotFoundException;
 use Throwable;
 use Response;
 use ReflectionException;
@@ -74,6 +75,12 @@ class Handler extends ExceptionHandler
             return response([
                 'Status' => 0,
                 'Error'=>'Controller function that does not exist'
+            ]); 
+        }
+        if ($exception instanceof ModelNotFoundException) {
+            return response([
+                'Status' => 0,
+                'Error'=>'Model instance not found'
             ]); 
         }
         
